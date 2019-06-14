@@ -1,0 +1,156 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.3.31'
+        springBootVersion = '2.1.5.RELEASE'
+        jacksonVersion = '2.9.9'
+        junitVersion = '5.4.2'
+        javaVersion = '1.8' // https://stackoverflow.com/a/52890377
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
+        classpath('com.github.ben-manes:gradle-versions-plugin:0.21.0')
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-jpa'
+apply plugin: 'kotlin-spring'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'jacoco'
+
+group = 'co.maxkramer'
+sourceCompatibility = javaVersion
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+
+    ktlint
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    // Linting
+    ktlint 'com.github.shyiko:ktlint:0.31.0'
+
+    // Kotlin std lib
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    // Spring Boot Starters
+    implementation 'org.springframework.retry:spring-retry:1.2.4.RELEASE'
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-json:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+
+    // Database
+    compile 'org.flywaydb:flyway-core'
+    compile 'org.postgresql:postgresql'
+
+    // JSR-303 Validation
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.hibernate:hibernate-validator:6.0.17.Final'
+
+    // JSON Parsing
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
+
+    // Sentry exception reporting
+    implementation 'io.sentry:sentry-spring:1.7.22'
+
+    // Metrics
+    implementation 'io.micrometer:micrometer-registry-statsd:1.1.4'
+
+    // Spring Boot Annotation Processor
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // Tests
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.28.2'
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+    // Embedded Postgres Instance
+    testImplementation 'io.zonky.test:embedded-database-spring-test:1.4.1'
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = javaVersion
+        allWarningsAsErrors = true
+    }
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "src/main/**/*.kt"
+}
+check.dependsOn ktlint
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
+    }
+
+    systemProperty('spring.profiles.active', 'test')
+    maxHeapSize = "2048m"
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = javaVersion
+
+        allWarningsAsErrors = true
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+    }
+}
+
+dependencyUpdates {
+    // Write dependency update reports to build/reports/dependencies
+    outputDir = "${buildDir}/reports/dependencies"
+
+    // Reject any dependencies that are not fully fledged releases
+    resolutionStrategy {
+        componentSelection { rules ->
+            rules.all { ComponentSelection selection ->
+                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview', 'b', 'ea'].any { qualifier ->
+                    selection.candidate.version ==~ /(?i).*[.-]$qualifier[.\d-+]*/
+                }
+                if (rejected) {
+                    selection.reject('Release candidate')
+                }
+            }
+        }
+    }
+}
+
+test.finalizedBy jacocoTestReport
