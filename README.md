@@ -7,7 +7,11 @@ Things included:
 - Environment based configuration (dev vs production)
 - Ktlint
 - Gradle dependency updates/reports
+- Gradle wrapper
+- Sample CircleCI integration
 - Code coverage metric gathering
 - Statsd integration 
 - Example tests (using MockMVC and not RestAssured)
 - Embedded Postgres database for running tests
+- Configurable log levels
+- Banner!
