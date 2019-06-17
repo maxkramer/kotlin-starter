@@ -15,6 +15,6 @@ class GreetingController(
     @GetMapping("/greet")
     fun greet(@RequestParam name: String): String {
         logger.info("Greeting $name")
-        return greetingService.greet(name).renderedMessage
+        return greetingService.fetchGreeting(name)
     }
 }
