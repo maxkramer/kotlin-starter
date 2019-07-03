@@ -10,3 +10,5 @@ VALUES (1, 'Hello %s'),
        (3, 'Guten Tag %s!'),
        (4, 'Konichiwa %s'),
        (5, 'What''s up %s!');
+
+CREATE SEQUENCE hibernate_sequence;
