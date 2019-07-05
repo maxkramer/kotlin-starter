@@ -80,7 +80,8 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - build:
+          context: analysis
       - push-docker-image:
           requires:
             - build
