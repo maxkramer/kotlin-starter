@@ -28,11 +28,11 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - build/libs/kotlin-service.jar
+            - build/libs/kotlin-starter.jar
             - Dockerfile
             - build/reports
       - store_artifacts:
-          path: build/libs/kotlin-service.jar
+          path: build/libs/kotlin-starter.jar
       - store_artifacts:
           path: build/reports/dependencies/report.txt
       - store_test_results:
@@ -61,9 +61,8 @@ jobs:
           command: apk -U add --no-cache ca-certificates
       - attach_workspace:
           at: *working_directory
-      - setup_remote_docker
       - run:
-          name: Build Docker Image
+          name: Deploy to environment
           command: echo "deploying to $ENVIRONMENT"
   deploy-to-staging:
     environment:
