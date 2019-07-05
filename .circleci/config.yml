@@ -5,7 +5,7 @@ machine:
 jobs:
   build:
     docker:
-      - image: gradle:5.3-jdk11
+      - image: gradle:5.4-jdk11
     working_directory: *working_directory
     steps:
       - checkout
@@ -42,12 +42,12 @@ jobs:
       - image: alpine:latest
     working_directory: *working_directory
     steps:
+      - run:
+          name: Install dependencies
+          command: apk -U add --no-cache docker ca-certificates
       - attach_workspace:
           at: *working_directory
       - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: apk -U add --no-cache docker
       - run:
           name: Build Docker Image
           command: docker build -t kotlin-starter .
@@ -56,6 +56,9 @@ jobs:
       - image: alpine:latest
     working_directory: *working_directory
     steps:
+      - run:
+          name: Install dependencies
+          command: apk -U add --no-cache ca-certificates
       - attach_workspace:
           at: *working_directory
       - setup_remote_docker
