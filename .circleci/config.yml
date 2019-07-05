@@ -46,6 +46,23 @@ jobs:
       - run:
           name: Build Docker Image
           command: docker build -t kotlin-starter .
+  deploy: &deploy
+    working_directory: *working_directory
+    steps:
+      - attach_workspace:
+          at: *working_directory
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: echo "deploying to $ENVIRONMENT"
+  deploy-to-staging:
+    environment:
+      ENVIRONMENT: staging
+    <<: *deploy
+  deploy-to-production:
+    environment:
+      ENVIRONMENT: production
+    <<: *deploy
 
 workflows:
   version: 2
@@ -55,6 +72,25 @@ workflows:
       - push-docker-image:
           requires:
             - build
+          filters:
+            branches:
+              only: master
+      - deploy-to-staging:
+          requires:
+            - push-docker-image
+          filters:
+            branches:
+              only: master
+      - hold:
+          type: approval
+          requires:
+            - deploy-to-staging
+          filters:
+            branches:
+              only: master
+      - deploy-to-production:
+          requires:
+            - hold
           filters:
             branches:
               only: master
