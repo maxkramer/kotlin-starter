@@ -137,7 +137,8 @@ compileTestKotlin {
 
 jacocoTestReport {
     reports {
-        xml.enabled = true
+        xml.setEnabled(true)
+        html.setEnabled(false)
     }
 }
 
