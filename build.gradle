@@ -85,7 +85,7 @@ dependencies {
 
     // Tests
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:2.26.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.28.2'
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 
