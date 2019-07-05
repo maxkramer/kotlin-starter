@@ -21,6 +21,9 @@ jobs:
           environment:
             GRADLE_OPTS: -Xmx2048m -Dfile.encoding=UTF-8 -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true
             GRADLE_HOME: ~/.gradle
+      - run:
+          name: Upload code coverage
+          command: bash <(curl -s https://codecov.io/bash)
       - save_cache:
           paths:
             - ~/.gradle

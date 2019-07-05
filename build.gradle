@@ -119,6 +119,11 @@ test {
 
     systemProperty('spring.profiles.active', 'test')
     maxHeapSize = "2048m"
+
+    reports {
+        junitXml.enabled = true
+        html.enabled = true
+    }
 }
 
 compileTestKotlin {
