@@ -5,7 +5,7 @@ machine:
 jobs:
   build:
     docker:
-      - image: gradle:5.4-jdk11
+      - image: gradle:5.5-jdk11
     working_directory: *working_directory
     steps:
       - checkout
