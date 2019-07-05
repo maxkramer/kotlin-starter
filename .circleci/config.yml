@@ -1,0 +1,60 @@
+version: 2
+workspace-name: &working_directory /tmp/workspace
+machine:
+  timezone: Europe/Berlin
+jobs:
+  build:
+    docker:
+      - image: gradle:5.3-jdk11
+    working_directory: *working_directory
+    steps:
+      - checkout
+      - attach_workspace:
+          at: *working_directory
+      - restore_cache:
+          keys:
+            - gradle-dependencies-{{ checksum "build.gradle" }}
+            - gradle-dependencies-
+      - run:
+          name: Build, test, generate dependency report
+          command: gradle clean dependencyUpdates build --project-cache-dir=~/.gradle --stacktrace --no-daemon --build-cache
+          environment:
+            GRADLE_OPTS: -Xmx2048m -Dfile.encoding=UTF-8 -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true
+            GRADLE_HOME: ~/.gradle
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-dependencies-{{ checksum "build.gradle" }}
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - build/libs/kotlin-service.jar
+            - Dockerfile
+            - build/reports
+      - store_artifacts:
+          path: build/libs/kotlin-service.jar
+      - store_artifacts:
+          path: build/reports/dependencies/report.txt
+      - store_test_results:
+          path: build/test-results/test
+  push-docker-image:
+    working_directory: *working_directory
+    steps:
+      - attach_workspace:
+          at: *working_directory
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: docker build -t kotlin-starter .
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - push-docker-image:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
