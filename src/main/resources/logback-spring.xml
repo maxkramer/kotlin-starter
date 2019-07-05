@@ -11,4 +11,5 @@
     </root>
 
     <logger name="co.maxkramer" level="INFO"/>
+    <logger name="org.hibernate" level="DEBUG" />
 </configuration>
