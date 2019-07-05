@@ -38,11 +38,16 @@ jobs:
       - store_test_results:
           path: build/test-results/test
   push-docker-image:
+    docker:
+      - image: alpine:latest
     working_directory: *working_directory
     steps:
       - attach_workspace:
           at: *working_directory
       - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: apk -U add --no-cache docker
       - run:
           name: Build Docker Image
           command: docker build -t kotlin-starter .
