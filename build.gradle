@@ -78,7 +78,7 @@ dependencies {
     implementation 'io.sentry:sentry-spring:1.7.22'
 
     // Metrics
-    implementation 'io.micrometer:micrometer-registry-statsd:1.1.4'
+    implementation 'io.micrometer:micrometer-registry-statsd:1.2.0'
 
     // Spring Boot Annotation Processor
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
