@@ -31,6 +31,7 @@ To provide you with a very simple and pre-configured Spring Boot project that yo
 - ≥ Java 11: I'd recommend [Jabba][6] for managing your Java installations.
 - Running postgres database. By default, the application looks for a database named `kotlin-starter` running on `localhost:5432` with username `postgres` and password `password`. If your configuration does not match, please update the [application.yml][7].
 
+### Running the app
 Clone the repository:
 ```$ git clone git@github.com:maxkramer/kotlin-starter.git```
 
@@ -39,7 +40,6 @@ Change directory into the kotlin-starter and run the application.
 ```
 $ cd kotlin-starter
 $ ./gradlew bootRun
-
 ```
 
 To run the tests:
@@ -61,6 +61,3 @@ $ ./gradlew test
 [5]: https://62-192011124-gh.circle-artifacts.com/0/tmp/workspace/build/reports/dependencies/report.txt
 [6]: https://github.com/shyiko/jabba
 [7]: https://github.com/maxkramer/kotlin-starter/blob/master/src/main/resources/application.yml
-
-
-
