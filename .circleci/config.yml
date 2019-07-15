@@ -16,12 +16,16 @@ jobs:
             - gradle-dependencies-{{ checksum "build.gradle" }}
             - gradle-dependencies-
       - run:
+          name: Create non-root user
+          command: |
+            # this is required as the embedded postgres cannot be run as root & this image uses a root user
+            useradd -m ci -G root && chown -R ci:root /app && chown -R ci:root /tmp && su ci
+      - run:
           name: Build, test, generate dependency report
-          command: ./gradlew clean dependencyUpdates build --project-cache-dir=~/.gradle --stacktrace --no-daemon --build-cache
+          command: ./gradlew clean dependencyUpdates build --project-cache-dir=/home/ci/.gradle --stacktrace --no-daemon --build-cache
           environment:
             GRADLE_OPTS: -Xmx3072m -Dfile.encoding=UTF-8 -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true
-            GRADLE_HOME: /tmp/workspace/.gradle
-            GRADLE_USER_HOME: /tmp/workspace/.gradle
+            GRADLE_USER_HOME: /home/ci/.gradle
       - run:
           name: Upload code coverage
           command: bash <(curl -s https://codecov.io/bash)

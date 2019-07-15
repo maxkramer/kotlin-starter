@@ -56,7 +56,6 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
     // Spring Boot Starters
-    implementation 'org.springframework.retry:spring-retry:1.2.4.RELEASE'
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-json:${springBootVersion}"
@@ -73,9 +72,6 @@ dependencies {
     // JSON Parsing
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
 
-    // Sentry exception reporting
-    implementation 'io.sentry:sentry-spring:1.7.23'
-
     // Metrics
     implementation 'io.micrometer:micrometer-registry-statsd:1.2.0'
 
@@ -85,9 +81,9 @@ dependencies {
     // Tests
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
     testImplementation 'org.mockito:mockito-junit-jupiter'
-    testImplementation "org.junit.jupiter:junit-jupiter-params"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine"
-    testImplementation "org.junit.platform:junit-platform-launcher"
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.platform:junit-platform-launcher'
 
     // Embedded Postgres Instance
     testImplementation 'io.zonky.test:embedded-database-spring-test:1.4.1'
@@ -138,7 +134,7 @@ compileTestKotlin {
 jacocoTestReport {
     reports {
         xml.setEnabled(true)
-        html.setEnabled(true)
+        html.setEnabled(false)
     }
 }
 
