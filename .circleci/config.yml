@@ -41,6 +41,7 @@ jobs:
             - build/libs/kotlin-starter.jar
             - Dockerfile
             - build/reports
+            - k8s
       - store_artifacts:
           path: build/libs/kotlin-starter.jar
       - store_artifacts:
