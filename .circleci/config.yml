@@ -75,9 +75,12 @@ jobs:
     steps:
       - run:
           name: Install dependencies
-          command: apk -U add --no-cache ca-certificates
+          command: apk -U add --no-cache ca-certificates gettext
       - attach_workspace:
           at: *working_directory
+      - run:
+          name: Template Kubernetes manifests
+          command: for i in k8s/*.yml; do cat $i | envsubst > k8s/$(basename $i); done
       - run:
           name: Deploy to environment
           command: echo "deploying to $ENVIRONMENT"

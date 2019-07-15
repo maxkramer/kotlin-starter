@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kotlin-starter
+  name: kotlin-starter
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  progressDeadlineSeconds: 300
+  selector:
+    matchLabels:
+      app: kotlin-starter
+  template:
+    metadata:
+      labels:
+        app: kotlin-starter
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: kotlin-starter
+          image: maxkramer/kotlin-starter:$CIRCLE_SHA1
+          ports:
+            - name: app-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: app-port
+            initialDelaySeconds: 50
+            timeoutSeconds: 5
+            failureThreshold: 3
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: app-port
+            initialDelaySeconds: 50
+            timeoutSeconds: 5
+            failureThreshold: 3
+            periodSeconds: 5
+          resources:
+            limits:
+              memory: "2G"
+            requests:
+              cpu: "0.5"
+              memory: "1G"
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production, default
+            - name: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: kotlin-starter-secrets
+                  key: database.host
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: kotlin-starter-secrets
+                  key: database.username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kotlin-starter-secrets
+                  key: database.password

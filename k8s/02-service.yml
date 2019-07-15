@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kotlin-starter
+spec:
+  selector:
+    app: kotlin-starter
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
