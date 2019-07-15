@@ -11,6 +11,4 @@
     </root>
 
     <logger name="co.maxkramer" level="INFO"/>
-    <logger name="org.hibernate" level="DEBUG" />
-    <logger name="org.flywaydb.core" level="DEBUG" />
 </configuration>

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface GreetingRepository : JpaRepository<Greeting, Int> {
-    @Query("SELECT * FROM greeting ORDER BY random()", nativeQuery = true)
+    @Query("SELECT * FROM greeting ORDER BY random() LIMIT 1", nativeQuery = true)
     fun findFirstRandom(): Greeting
 }

@@ -5,6 +5,7 @@ import co.maxkramer.kotlinstarter.model.Greeting
 import co.maxkramer.kotlinstarter.support.UseEmbeddedPostgres
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -16,6 +17,11 @@ import org.springframework.context.annotation.Import
 class GreetingRepositoryTest {
     @Autowired
     private lateinit var greetingRepository: GreetingRepository
+
+    @BeforeEach
+    fun setup() {
+        greetingRepository.deleteAll()
+    }
 
     @Test
     fun `should create a greeting`() {
@@ -43,5 +49,13 @@ class GreetingRepositoryTest {
 
         assertNotNull(createdGreeting.createdAt)
         assertNotNull(createdGreeting.updatedAt)
+    }
+
+    @Test
+    fun `findFirstRandom should return a random greeting`() {
+        greetingRepository.save(Greeting(messageFormat = "Hello %s"))
+
+        val foundGreeting = greetingRepository.findFirstRandom()
+        assertNotNull(foundGreeting)
     }
 }
