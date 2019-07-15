@@ -20,13 +20,13 @@ jobs:
           command: ./gradlew clean dependencyUpdates build --project-cache-dir=~/.gradle --stacktrace --no-daemon --build-cache
           environment:
             GRADLE_OPTS: -Xmx3072m -Dfile.encoding=UTF-8 -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true
-            GRADLE_HOME: ~/.gradle
+            GRADLE_HOME: /tmp/workspace/.gradle
       - run:
           name: Upload code coverage
           command: bash <(curl -s https://codecov.io/bash)
       - save_cache:
           paths:
-            - ~/.gradle
+            - /tmp/workspace/.gradle
           key: gradle-dependencies-{{ checksum "build.gradle" }}
       - persist_to_workspace:
           root: ./
