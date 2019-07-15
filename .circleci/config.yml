@@ -5,7 +5,7 @@ machine:
 jobs:
   build:
     docker:
-      - image: gradle:5.5-jdk11
+      - image: openjdk:11-slim
     working_directory: *working_directory
     steps:
       - checkout
@@ -16,17 +16,24 @@ jobs:
             - gradle-dependencies-{{ checksum "build.gradle" }}
             - gradle-dependencies-
       - run:
+          name: Create non-root user
+          command: |
+            # this is required as the embedded postgres cannot be run as root & this image uses a root user
+            useradd -m ci -G root && chown -R ci:root $CIRCLE_WORKING_DIRECTORY && chown -R ci:root /tmp && chown -R ci:root /home/ci
+      - run:
           name: Build, test, generate dependency report
-          command: gradle clean dependencyUpdates build --project-cache-dir=~/.gradle --stacktrace --no-daemon --build-cache
+          command: su -p - ci -c "$CIRCLE_WORKSPACE./gradlew clean dependencyUpdates build --project-cache-dir=/home/ci/.gradle --stacktrace --no-daemon --build-cache"
           environment:
-            GRADLE_OPTS: -Xmx2048m -Dfile.encoding=UTF-8 -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true
-            GRADLE_HOME: ~/.gradle
+            GRADLE_OPTS: -Xmx3072m -Dfile.encoding=UTF-8 -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true
+            GRADLE_USER_HOME: /home/ci/.gradle
       - run:
           name: Upload code coverage
-          command: bash <(curl -s https://codecov.io/bash)
+          command: |
+            apt-get update && apt-get install -y curl
+            bash <(curl -s https://codecov.io/bash)
       - save_cache:
           paths:
-            - ~/.gradle
+            - /tmp/workspace/.gradle
           key: gradle-dependencies-{{ checksum "build.gradle" }}
       - persist_to_workspace:
           root: ./

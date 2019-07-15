@@ -24,11 +24,12 @@ To provide you with a very simple and pre-configured Spring Boot project that yo
 - Integration with micrometer for Statsd integration (easily replaceable with Prometheus)
 - Dependency reports (lists outdated dependencies via `$ ./gradlew dependencyUpdates`
 
+
 ## Getting started
 
 ### Prerequisites
 
-- >= Java 11: I'd recommend [Jabba][1] for managing your Java installations.
+- ≥ Java 11: I'd recommend [Jabba][1] for managing your Java installations.
 - Running postgres database. By default, the application looks for a database named `kotlin-starter` running on `localhost:5432` with username `postgres` and password `password`. If your configuration does not match, please update the [application.yml][2].
 
 Clone the repository:
