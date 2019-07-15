@@ -1,3 +1,4 @@
+# Can be overridden with the env var $DATABASE_HOST for ease
 database:
   host: localhost
 
@@ -5,7 +6,7 @@ spring:
   application.name: kotlin-starter
   profiles.active: default
   datasource:
-    url: jdbc:postgresql://${database.host}:5432/starter
+    url: jdbc:postgresql://${database.host}:5432/kotlin-starter
     platform: postgresql
     driverClassName: org.postgresql.Driver
     username: postgres
@@ -15,7 +16,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     hibernate.ddl-auto: validate
     open-in-view: true
-
 
 ---
 spring:

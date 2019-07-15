@@ -53,7 +53,14 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker Image
-          command: docker build -t kotlin-starter .
+          command: docker build -t maxkramer/kotlin-starter:$CIRCLE_SHA1 .
+      - run:
+          name: Login to Dockerhub
+          command: echo -n $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+      - run:
+          name: Push Docker Image
+          command: docker push maxkramer/kotlin-starter:$CIRCLE_SHA1
+
   deploy: &deploy
     docker:
       - image: alpine:latest
@@ -88,6 +95,7 @@ workflows:
           filters:
             branches:
               only: master
+          context: dockerhub
       - deploy-to-staging:
           requires:
             - push-docker-image
