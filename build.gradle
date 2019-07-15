@@ -74,7 +74,7 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
 
     // Sentry exception reporting
-    implementation 'io.sentry:sentry-spring:1.7.23'
+    implementation 'io.sentry:sentry-spring:1.7.24'
 
     // Metrics
     implementation 'io.micrometer:micrometer-registry-statsd:1.2.0'
