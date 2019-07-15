@@ -1,5 +1,6 @@
 # Kotlin Starter
 [![CircleCI](https://circleci.com/gh/maxkramer/kotlin-starter/tree/master.svg?style=svg)](https://circleci.com/gh/maxkramer/kotlin-starter/tree/master)
+[![codecov](https://codecov.io/gh/maxkramer/kotlin-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/maxkramer/kotlin-starter)
 
 The Kotlin Starter is a very barebones project for getting started building a Kotlin backend with Spring Boot, leveraging some of the best practices I have come across while working with Kotlin over the past two years.
 
