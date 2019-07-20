@@ -22,7 +22,7 @@ jobs:
             useradd -m ci -G root && chown -R ci:root $CIRCLE_WORKING_DIRECTORY && chown -R ci:root /tmp && chown -R ci:root /home/ci
       - run:
           name: Build, test, generate dependency report
-          command: su -p - ci -c "$CIRCLE_WORKING_DIRECTORY/gradlew clean dependencyUpdates build --project-cache-dir=/home/c    i/.gradle --stacktrace --no-daemon --build-cache"
+          command: su -p "ci" -c "$CIRCLE_WORKING_DIRECTORY/gradlew clean dependencyUpdates build --project-cache-dir=$GRADLE_USER_HOME --stacktrace --no-daemon --build-cache"
           environment:
             GRADLE_OPTS: -Xmx3072m -Dfile.encoding=UTF-8 -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true
             GRADLE_USER_HOME: /home/ci/.gradle
