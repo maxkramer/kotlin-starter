@@ -1,8 +1,8 @@
 package co.maxkramer.kotlinstarter.support
 
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import java.lang.annotation.Inherited
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 
 @Inherited
 @Target(AnnotationTarget.CLASS)
