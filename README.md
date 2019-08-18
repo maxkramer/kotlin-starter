@@ -24,6 +24,7 @@ To provide you with a very simple and pre-configured Spring Boot project that yo
 - Configurable [log levels][4]
 - Integration with micrometer for Statsd integration (easily replaceable with Prometheus)
 - Dependency reports (lists outdated dependencies via `$ ./gradlew dependencyUpdates` i.e. [example][5]
+- SwaggerUI integration: Run the application and point your browser at http://localhost:8080/swagger-ui.html
 
 ## Getting started
 ### Prerequisites
