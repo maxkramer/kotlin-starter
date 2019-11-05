@@ -68,7 +68,7 @@ dependencies {
 
     // JSR-303 Validation
     implementation 'javax.validation:validation-api:2.0.1.Final'
-    implementation 'org.hibernate:hibernate-validator:6.0.17.Final'
+    implementation 'org.hibernate:hibernate-validator:6.1.0.Final'
 
     // JSON Parsing
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
