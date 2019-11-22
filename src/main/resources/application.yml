@@ -17,6 +17,8 @@ spring:
     hibernate.ddl-auto: validate
     open-in-view: true
 
+cors.allowed-origins: https://your-frontend.project.org
+
 ---
 spring:
   profiles: default
