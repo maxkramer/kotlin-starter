@@ -21,7 +21,7 @@ class GreetingServiceTest {
 
     @BeforeEach
     fun setup() {
-        whenever(greetingRepository.findFirstRandom()).thenReturn(Greeting(1, "Hello %s"))
+        whenever(greetingRepository.findFirstRandom()).thenReturn(Greeting(messageFormat = "Hello %s"))
     }
 
     @Test

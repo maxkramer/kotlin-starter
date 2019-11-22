@@ -1,11 +1,11 @@
 package co.maxkramer.kotlinstarter.model
 
 import java.time.Instant
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.validation.constraints.Size
 import org.springframework.data.annotation.CreatedDate
@@ -16,8 +16,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 @EntityListeners(AuditingEntityListener::class)
 data class Greeting(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Int? = null,
+    @GeneratedValue
+    val id: UUID? = null,
 
     @Size(max = 100)
     private val messageFormat: String,
