@@ -91,7 +91,7 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-launcher'
 
     // Embedded Postgres Instance
-    testImplementation 'io.zonky.test:embedded-database-spring-test:1.5.1'
+    testImplementation 'io.zonky.test:embedded-database-spring-test:1.5.2'
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }
 
