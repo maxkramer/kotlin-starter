@@ -49,6 +49,12 @@ To run the tests:
 $ ./gradlew test
 ```
 
+### Configuring CORS
+In the class `CorsConfig` you can enable CORS for individual endpoints, their HTTP methods, and which domains are allowed to access these endpoints.
+The property `cors.allowed-origins` in the `application.yml` is used to make the domain configurable for different environments,
+e.g. `https://your-frontend.staging.project.org` for _staging_ and `https://your-frontend.project.org` for the _production_ environment.
+In the provided configuration example the `/greet` endpoint is only allowed to be accessed by the configured domain.
+
 ## FAQ (WIP)
 
 - Why two environments?
