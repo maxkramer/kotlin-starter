@@ -75,7 +75,7 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
 
     // Metrics
-    implementation 'io.micrometer:micrometer-registry-statsd:1.3.3'
+    implementation 'io.micrometer:micrometer-registry-statsd:1.4.0'
 
     // Swagger UI
     compile "io.springfox:springfox-swagger2:${swaggerVersion}"
