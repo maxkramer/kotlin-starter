@@ -4,7 +4,7 @@ buildscript {
         springBootVersion = '2.2.6.RELEASE'
         jacksonVersion = '2.11.0'
         javaVersion = '1.8' // https://stackoverflow.com/a/52890377
-        swaggerVersion = '2.9.2'
+        swaggerVersion = '2.10.0'
         restAssuredVersion = '4.3.0'
     }
 
