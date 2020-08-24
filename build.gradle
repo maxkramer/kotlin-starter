@@ -51,7 +51,7 @@ ext['mockito.version'] = '2.24.0' // https://github.com/mockito/mockito/issues/1
 
 dependencies {
     // Linting
-    ktlint 'com.pinterest:ktlint:0.36.0'
+    ktlint 'com.pinterest:ktlint:0.38.0'
 
     // Kotlin std lib
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
