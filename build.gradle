@@ -5,7 +5,7 @@ buildscript {
         jacksonVersion = '2.11.2'
         javaVersion = '1.8' // https://stackoverflow.com/a/52890377
         swaggerVersion = '3.0.0'
-        restAssuredVersion = '4.3.1'
+        restAssuredVersion = '4.3.2'
     }
 
     repositories {
