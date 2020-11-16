@@ -93,7 +93,7 @@ dependencies {
     testImplementation "io.rest-assured:spring-web-test-client:${restAssuredVersion}"
 
     // Embedded Postgres Instance
-    testImplementation 'io.zonky.test:embedded-database-spring-test:1.5.5'
+    testImplementation 'io.zonky.test:embedded-database-spring-test:1.6.0'
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }
 
